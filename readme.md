@@ -5,7 +5,7 @@ The DLL is based on the commit 445f1cd of the Ultimate ASI Loader.
 
 By doing a simple replacement of the function SHGetKnownFolderPath to SHGetFolderPath this ASI loader is now functional under Windows XP.
 
-The intention behind bringing XP support back was simply for my HP2WSFix.
+The intention behind bringing XP support back was simply for my [HP2WSFix](https://github.com/xan1242/hp2wsfix).
 
 # ORIGINAL DESCRIPTION
 
