@@ -28,11 +28,11 @@ std::wstring to_wstring(std::string_view cstr)
     return wstrTo;
 }
 
-std::wstring SHGetKnownFolderPath(REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken)
+std::wstring SHGetFolderPath(HWND hwnd, int csidl, HANDLE hToken, DWORD dwFlags, LPSTR pszPath)
 {
     std::wstring r;
-    WCHAR* szSystemPath = nullptr;
-    if (SUCCEEDED(SHGetKnownFolderPath(rfid, dwFlags, hToken, &szSystemPath)))
+    WCHAR* szSystemPath = (WCHAR*)malloc(MAX_PATH);
+    if (SUCCEEDED(SHGetFolderPath(hwnd, csidl, hToken, dwFlags, szSystemPath)))
     {
         r = szSystemPath;
     }
@@ -151,7 +151,7 @@ void LoadOriginalLibrary()
     if (_InterlockedCompareExchange(&OriginalLibraryLoaded, 1, 0) != 0) return;
 
     auto szSelfName = GetSelfName();
-    auto szSystemPath = SHGetKnownFolderPath(FOLDERID_System, 0, nullptr) + L'\\' + szSelfName;
+    auto szSystemPath = SHGetFolderPath((HWND)NULL, CSIDL_SYSTEM, (HANDLE)NULL, (DWORD)SHGFP_TYPE_CURRENT, (LPSTR)NULL) + L'\\' + szSelfName;
     auto szLocalPath = GetModuleFileNameW(hm); szLocalPath = szLocalPath.substr(0, szLocalPath.find_last_of(L"/\\") + 1);
 
 #if !X64
@@ -325,7 +325,7 @@ void Direct3D8DisableMaximizedWindowedModeShim()
             pd3d8 = LoadLibraryW(L"d3d8.dll");
             if (!pd3d8)
             {
-                pd3d8 = LoadLibraryW(SHGetKnownFolderPath(FOLDERID_System, 0, nullptr) + L'\\' + L"d3d8.dll");
+                pd3d8 = LoadLibraryW(SHGetFolderPath((HWND)NULL, CSIDL_SYSTEM, (HANDLE)NULL, (DWORD)SHGFP_TYPE_CURRENT, (LPSTR)NULL) + L'\\' + L"d3d8.dll");
             }
         }
 

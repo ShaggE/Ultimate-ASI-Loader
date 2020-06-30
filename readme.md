@@ -1,4 +1,13 @@
-# Ultimate ASI Loader
+# Ultimate ASI Loader - WINDOWS XP EDITION
+
+## FORK NOTE
+The DLL is based on the commit 445f1cd of the Ultimate ASI Loader.
+
+By doing a simple replacement of the function SHGetKnownFolderPath to SHGetFolderPath this ASI loader is now functional under Windows XP.
+
+The intention behind bringing XP support back was simply for my HP2WSFix.
+
+# ORIGINAL DESCRIPTION
 
 ## DESCRIPTION
 
